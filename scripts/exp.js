@@ -1,9 +1,6 @@
-// experiment's data is stored in an object called "data".
-
-// data.trials is a list of objects containing the trial info for each slide of the experiment.
-// example of a trial object:
-// {"target_color": "white", "number_of_target_color_balls": 3, "sentence": "Some balls are black in the picture"}
-// what the trial object contains depends on the particular experiment.
+// initExp() creates and returns an object ('data') where the experiment's info is stored.
+// data.trials - a list of objects containing the trial info that is needed for each slide
+// of the experiment.
 var initExp = function() {
 	var data = {};
 
@@ -36,6 +33,7 @@ var initExp = function() {
 		return comb;
 	};
 
+	// each time initExp() is called, items in data.trials are shuffled
 	data.trials = shuffleComb(trials_raw);
 
 	return data;

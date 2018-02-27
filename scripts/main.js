@@ -6,6 +6,7 @@ $('document').ready(function() {
 
 var spr = {};
 
+// spr.findNextView() handles the views
 spr.findNextView = function() {
 	if (this.view.name === 'intro') {
 		this.view = initInstructionsView();
@@ -33,16 +34,20 @@ spr.findNextView = function() {
 spr.init = function() {
 	// CPT - current practice trial
 	this.CPT = 0;
+
 	// CT - current trial
 	this.CT = 0;
 
+	// generates the experiment and assigns it to this.data
 	this.data = initExp();
 
-	this.view = initIntroView();
+	// generated the view
+	this.view = initBeginExpView();
 	
 	// to be done: get TT and TPT from the model, this now is a temp solution
 	// TPT - total practice trials
 	this.TPT = 2;
+
 	// TT - total trials
 	this.TT = this.data.trials.length;
 };

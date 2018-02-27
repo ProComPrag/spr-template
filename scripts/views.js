@@ -73,6 +73,7 @@ var initTrialView = function(trialInfo, CT) {
 	var sentence = initSentence();
 	var startingTime = Date.now();
 
+	// renders the templ
 	$('#main').html(Mustache.render(view.template, {
 		currentTrial: CT + 1,
 		totalTrials: spr.data.trials.length,
@@ -80,15 +81,24 @@ var initTrialView = function(trialInfo, CT) {
 		buttonText: config.practice.buttonText
 	}));
 
+	// creates one continuous underline below the sentence if it was set to true in config.js
+	if (config.expSettings.underlineOneLine === true) {
+		var words = $(".word");
+
+		for (var i=0; i<words.length; i++) {
+			$(words[i]).css('margin', '0 -3px');
+		}
+	}
+
 	
 	setTimeout(function() {
 		var show = $('.show');
-		$('.fixation-container').addClass('nodisplay');
+		$('.pause-container').addClass('nodisplay');
 
 		for (var i=0; i<show.length; i++) {
 			$(show[i]).removeClass('nodisplay');
 		};
-	}, 1000);
+	}, config.expSettings.pause);
 
 	// checks whether the key pressed is space and if so calls sentence.showNextWord()
 	// handleKeyUp() is called when a key is pressed
@@ -126,7 +136,7 @@ var initTrialView = function(trialInfo, CT) {
 			// attaches an event listener for key pressed
 			// called handleKeyUp() when a key is pressed. (handleKeyUp() checks whether the key is space)
 			$('body').on('keyup', handleKeyUp);
-		}, config.expSettings.showDuration + 1000);
+		}, config.expSettings.showDuration + config.expSettings.pause);
 	// or the image does not disappear at all
 	} else {
 		// attaches an event listener for key pressed

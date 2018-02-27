@@ -13,7 +13,11 @@ var config = {
 		"hideImage": true,
 		// for how long the image is shown before it dissapears in ms (1000 ms = 1 sec)
 		// needed if "hideImage" is set to true
-		"showDuration": 1000
+		"showDuration": 1000,
+		// one line sentence underline (true), underline below each word of the sentence with spaces inbetween (false)
+		"underlineOneLine": false,
+		// pause before the image shows
+		"pause": 2000
 	},
 
 	// intro view
@@ -46,7 +50,7 @@ var config = {
 
 	// begin experiment view
 	"beginExp": {
-		"text": ""
+		"text": "Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus."
 	},
 
 	// trial view
