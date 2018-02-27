@@ -1,23 +1,31 @@
 // the config provides the option of customising texts and titles across the website.
 var config = {
-	// mandatory field
+	// mandatory fields - author, experiment_id, description
 	"author": "Stela Plamenova",
 	"experiment_id": "test-spr-001",
 	"description": "Self-paced reading",
 	"contact_email": "stella.plamenova@gmail.com",
+	"liveExperiment": true,
+
+	// submission settings
+	// set "is_MTurk" to true if the experiment is posted in MTurk
 	"is_MTurk": false,
+	// mturk's HIT submission url
+	// specify the submission url if "is_MTurk" is set to true
 	"MTurk_server": "",
+
 	// experiment settings
 	"expSettings": {
-		// if you want the image in the experiment to disappear set to true
+		// set "hideImage" to true if the image should dissapear
 		"hideImage": true,
 		// for how long the image is shown before it dissapears in ms (1000 ms = 1 sec)
 		// needed if "hideImage" is set to true
-		"showDuration": 1000,
+		"showDuration": 500,
 		// one line sentence underline (true), underline below each word of the sentence with spaces inbetween (false)
 		"underlineOneLine": false,
-		// pause before the image shows
-		"pause": 2000
+		// pause where there is only cross in the middle of the screen before the image and sentence appear
+		// set to 0 if there shouldn't be a pause
+		"pause": 1000
 	},
 
 	// intro view

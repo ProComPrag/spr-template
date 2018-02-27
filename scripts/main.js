@@ -2,6 +2,13 @@
 // the experiment initialisation is called
 $('document').ready(function() {	
 	spr.init();
+
+	// prevent scrolling when space is pressed (firefox does it)
+	window.onkeydown = function(e) {
+		if (e.keyCode == 32 && e.target == document.body) {
+			e.preventDefault();
+		}
+	};
 });
 
 var spr = {};
@@ -11,10 +18,12 @@ spr.findNextView = function() {
 	if (this.view.name === 'intro') {
 		this.view = initInstructionsView();
 	} else if (this.view.name === 'instructions') {
-		this.view = initPracticeView();
+		this.view = initPracticeView(practice_trials[this.CPT]);
+		console.log(practice_trials[this.CPT]);
 		this.CPT++;
 	} else if (this.view.name === 'practice' && (this.CPT < this.TPT)) {
-		this.view = initPracticeView();
+		this.view = initPracticeView(practice_trials[this.CPT]);
+		console.log(practice_trials[this.CPT]);
 		this.CPT++;
 	} else if (this.view.name === 'practice' && this.CPT === this.TPT) {
 		this.view = initBeginExpView();
@@ -42,11 +51,11 @@ spr.init = function() {
 	this.data = initExp();
 
 	// generated the view
-	this.view = initBeginExpView();
+	this.view = initIntroView();
 	
 	// to be done: get TT and TPT from the model, this now is a temp solution
 	// TPT - total practice trials
-	this.TPT = 2;
+	this.TPT = practice_trials.length;
 
 	// TT - total trials
 	this.TT = this.data.trials.length;

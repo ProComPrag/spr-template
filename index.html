@@ -60,11 +60,24 @@
 		<!-- Practice trial view -->
 		<script id="practice-view" type="x-tmpl-mustache">
 		<div class="view">
-			<h2>{{ title }}</h2>
-			<section class="text-container">
-				<p class="text">{{ text }}</p>
-			</section>
-			<button class="btn next-view">{{ buttonText }}</button>
+			<div class="pause-container">
+				<div class="point"></div>
+			</div>
+			<div class="stimulus-container">
+				<div class="stimulus img nodisplay show"></div>
+			</div>
+			<p class="sentence nodisplay show">
+				{{# sentence }}
+				<span class="word">{{ . }}</span>
+				{{/ sentence }}
+			</p>
+			<p class="question nodisplay">
+				<label for="yes" class="answer">yes</label>
+				<input type="radio" name="question" id="yes"
+					value="yes" />
+				<input type="radio" name="question" id="no" value="no" />
+				<label for="no" class="answer">no</label>
+			</p>
 		</div>
 		</script>
 

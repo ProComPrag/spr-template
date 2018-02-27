@@ -33,17 +33,66 @@ var initInstructionsView = function() {
 
 
 // creates Practice view
-var initPracticeView = function() {
+var initPracticeView = function(trialInfo) {
 	var view = {};
 	view.name = 'practice',
 	view.template = $('#practice-view').html();
+	var sentence = initSentence();
+
 	$('#main').html(Mustache.render(view.template, {
 		title: config.practice.title,
-		text: config.practice.text,
-		buttonText: config.practice.buttonText
+		sentence: trialInfo.sentence.split(" ")
 	}));
 
-	showNextView();
+	// creates one continuous underline below the sentence if it was set to true in config.js
+	if (config.expSettings.underlineOneLine === true) {
+		var words = $(".word");
+
+		for (var i=0; i<words.length; i++) {
+			$(words[i]).css('margin', '0 -3px');
+		}
+	}
+
+	setTimeout(function() {
+		var show = $('.show');
+		$('.pause-container').addClass('nodisplay');
+
+		for (var i=0; i<show.length; i++) {
+			$(show[i]).removeClass('nodisplay');
+		};
+	}, config.expSettings.pause);
+
+
+	// checks the expSettings in config.js and depending on the settings
+	// either show the image for a particular amount of time
+	if (config.expSettings.hideImage === true) {
+		setTimeout(function() {
+			// add a css class to the image to hide it
+			$('.img').addClass('nodisplay');
+
+			// attaches an event listener for key pressed
+			// called handleKeyUp() when a key is pressed. (handleKeyUp() checks whether the key is space)
+			$('body').on('keyup', handleKeyUp);
+		}, config.expSettings.showDuration + config.expSettings.pause);
+	// or the image does not disappear at all
+	} else {
+		// attaches an event listener for key pressed
+		// called handleKeyUp() when a key is pressed. (handleKeyUp() checks whether the key is space)
+		$('body').on('keyup', handleKeyUp);
+	}
+
+	// checks whether the key pressed is space and if so calls sentence.showNextWord()
+	// handleKeyUp() is called when a key is pressed
+	var handleKeyUp = function(e) {
+		if (e.which === 32) {
+			sentence.showNextWord();
+		}
+	};
+
+	$('input[name=question]').on('change', function() {
+		$('body').off('keyup', handleKeyUp);
+		spr.findNextView();
+	});
 
 	return view;
 };
@@ -90,7 +139,6 @@ var initTrialView = function(trialInfo, CT) {
 		}
 	}
 
-	
 	setTimeout(function() {
 		var show = $('.show');
 		$('.pause-container').addClass('nodisplay');
@@ -180,7 +228,7 @@ var initSubjInfoView = function() {
 
 
 // creates Thanks View
-var initThanksView = function(sendData) {
+var initThanksView = function() {
 	var view = {};
 	view.name = 'thanks';
 	view.template = $('#thanks-view').html();
@@ -188,7 +236,17 @@ var initThanksView = function(sendData) {
 		thanksMessage: config.thanks.message
 	}));
 
-	/*submitResults(config.is_MTurk, config.contact_email);*/
+	// if the experiment is set to live (seenconfig.js liveExperiment)
+	// the results are sent to the server
+	// if it is set to false
+	// the results are shown on the thanks slide
+	if (config.liveExperiment) {
+		submitResults(config.is_MTurk, config.contact_email);
+	} else {
+		jQuery('<p/>', {
+			text: JSON.stringify(spr.data.trials)
+		}).appendTo($('.view'));
+	}
 
 	console.log(spr.data.trials);
 
