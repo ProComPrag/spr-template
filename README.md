@@ -117,33 +117,32 @@ The spr experiment template contains a configuration file (`config.js`) that has
 
 The following fileds need to be filled so that the submission to the server works (config.js lines 6-18)
 
+1. **"author"**: string; the name of author of the experiment.
 
-	1. **"author"**: string; the name of author of the experiment.
+2. **"experiment_id"**: string; the id of the experiment (note: if the same id is used more than once, the new results are appended).
 
-	2. **"experiment_id"**: string; the id of the experiment (note: if the same id is used more than once, the new results are appended).
+3. **"description"**: string; a short description of the experiment.
 
-	3. **"description"**: string; a short description of the experiment.
+4. **"liveExperiment"**: boolean; set to `true` if the experiment is running with real participants and to `false` if the experimenter is testing on their own machine before posting the experiment. When set to `false`, the results that would have been submitted to the server are shown on the last template.
 
-	4. **"liveExperiment"**: boolean; set to `true` if the experiment is running with real participants and to `false` if the experimenter is testing on their own machine before posting the experiment. When set to `false`, the results that would have been submitted to the server are shown on the last template.
+5. **"contact_email"**: string; the email of the experiment's author.
 
-	5. **"contact_email"**: string; the email of the experiment's author.
+6. **"is_MTurk"**: boolean; set to `true` if the experiment is posted on Mechanical Turk (MTurk) so that the results are submitted to MTurk's servers as well and `false` otherwise.
 
-	6. **"is_MTurk"**: boolean; set to `true` if the experiment is posted on Mechanical Turk (MTurk) so that the results are submitted to MTurk's servers as well and `false` otherwise.
-
-	7. **"MTurk_server"**: string; the MTurk's submission url, check the [MTurk's docs](https://docs.aws.amazon.com/AWSMechTurk/latest/AWSMturkAPI/ApiReference_ExternalQuestionArticle.html) section "Form Action" for more information.
+7. **"MTurk_server"**: string; the MTurk's submission url, check the [MTurk's docs](https://docs.aws.amazon.com/AWSMechTurk/latest/AWSMturkAPI/ApiReference_ExternalQuestionArticle.html) section "Form Action" for more information.
 
 
 ### **"Experiment Settings Fields"**
 
-	(config.js lines 21-32)
+(config.js lines 21-32)
 
-	+ **"hideImage"**: boolean; when set to `true` the trial image disappears from the screen after some amount of time ("showDuration" needs to be given a value). If set to `false` the image stays on the screen the whole time.
++ **"hideImage"**: boolean; when set to `true` the trial image disappears from the screen after some amount of time ("showDuration" needs to be given a value). If set to `false` the image stays on the screen the whole time.
 
-	+ **"showDuration"**: number; the time in milliseconds the trial image stays on the screen before disappearing ("hideImage" needs to be set to `true`).
++ **"showDuration"**: number; the time in milliseconds the trial image stays on the screen before disappearing ("hideImage" needs to be set to `true`).
 
-	+ **"underlineOneLine"**: boolean; when set to `true` the trial sentence is one continous line, when set to `false` each word of the trial sentence has a separate underline below it.
++ **"underlineOneLine"**: boolean; when set to `true` the trial sentence is one continous line, when set to `false` each word of the trial sentence has a separate underline below it.
 
-	+ **"pause"**: number; the duration (in milliseconds) of a blank screen with a cross in the middle before the image and sentence underline show. If set to 0, there will be no blank screens between the trials. 
++ **"pause"**: number; the duration (in milliseconds) of a blank screen with a cross in the middle before the image and sentence underline show. If set to 0, there will be no blank screens between the trials. 
 
 
 ### **"Text fields"**
