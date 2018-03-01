@@ -3,107 +3,107 @@
 An example of a self paced reading experiment can be found: (to be completed).
 
 
-## Views
+## Cloning and running the project
 
+```
+# cloning
+git clone https://github.com/ProComPrag/spr-template
+
+# running
+cd spr-template
+
+# open index.html in the browser to see the experiment
+```
+
+
+## Dependencies
+
+The template uses [jQuery](https://jquery.com/) and [Mustache templates](https://github.com/janl/mustache.js). The libraries can be found at `libraries/`.
+
+
+
+## Files Organisation
+
++ `index.html`
++ `scripts`/
+	+ views.js
+	+ exp.js
+	+ main.js
+
++ `styles/styles.css`
++ `config.js`
++ `libraries`
++ README.md
++ LISENCE
+
+
+
+## Views
 
 **views sequence:**
 
-1. Introduction -> 2. Instructions -> 3. Practice trial (multiple) -> 4. Begin Exp -> 5. Trial (multiple) -> 6. Subject Info -> 7. Thanks
-
+Introduction -> Instructions -> Practice trial (multiple) -> Begin Exp -> Trial (multiple) -> Subject Info -> Thanks
 
 
 1. **Introduction view:**
 
 	+ role: contains general information about the experiment
-
 	+ elements: *title*, *text* and *next button*
-
 	+ code: 
-
 	+ displayed: once
-
 	+ *next button* brings Instructions view
-
 
 
 2. **Instruction view:**
 
 	+ role: gives instructions about the experiment
-
 	+ elements: *title*, *text* and *next button*.
-
 	+ code:
-
 	+ displayed: once
-
 	+ *next button* brings Practice Trial view
-
 
 
 3. **Practice Trial view:**
 
 	+ role: shows an example/s of trial/s, does not record the reading times and response
-
 	+ elements: *image*, *sentence*, *response buttons*
-
 	+ code: 
-
 	+ displayed: as many times as the number of trials
-
 	+ next: *response buttons* (choosing a response) bring either Practice Trial again or Begin Experiment view
-
 
 
 4. **Begin Experiment view:**
 
 	+ role: informs the partipant the real experiment is about to begin
-
 	+ elements: *text* and *next button*
-
 	+ code:
-
 	+ displayed: once
-
 	+ next: *next button* brings Trial view
-
 
 
 5. **Trial view:**
 	
 	+ role: shows a single trial, collects the reading times and response
-
 	+ elements: *progress bar*, *image*, *sentence*, *response buttons*
-
 	+ code: index.html lines ..; js/views.js lines ..
-
 	+ displayed: as many times as the number of trials
-
 	+ next: *response buttons* (choosing a respone) bring either Trial view or Subject Info view
-
 
 
 6. **Subject Info view:**
 
 	+ role: contains a questionnaire for collecting extra information about the participant
-
 	+ elements: *question fields*, *next button*
-
 	+ code:
-
 	+ displayed: once
-
 	+ next: *next button* brings Thanks view
-
 
 
 7. **Thanks view:**
 
 	+ role: displays a thank you message and makes an ajax request with the results
-
 	+ elements: *text*
-
 	+ code:
-
 	+ displayed: once
 
 
@@ -148,26 +148,3 @@ The following fileds need to be filled so that the submission to the server work
 ### **"Text fields"**
 
 The **texts**, **titles** and **button texts** of all the views can be modified (`config.js` lines 34-75).
-
-
-
-## Data format
-
-to be completed
-
-var data = {}
-
-data.trials = []
-
-each trial is an {}
-
-each trial contains key-value pairs (same keys expected)
-
-mandatory keys in the trial obj: "sentence"
-
-trial object's info is passed to trial view and the info is filled in the template
-
-
-## How is the repo organised
-
-to be completed
