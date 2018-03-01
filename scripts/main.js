@@ -19,11 +19,9 @@ spr.findNextView = function() {
 		this.view = initInstructionsView();
 	} else if (this.view.name === 'instructions') {
 		this.view = initPracticeView(practice_trials[this.CPT]);
-		console.log(practice_trials[this.CPT]);
 		this.CPT++;
 	} else if (this.view.name === 'practice' && (this.CPT < this.TPT)) {
 		this.view = initPracticeView(practice_trials[this.CPT]);
-		console.log(practice_trials[this.CPT]);
 		this.CPT++;
 	} else if (this.view.name === 'practice' && this.CPT === this.TPT) {
 		this.view = initBeginExpView();

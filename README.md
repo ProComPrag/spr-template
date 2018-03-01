@@ -148,3 +148,8 @@ The following fileds need to be filled so that the submission to the server work
 ### **"Text fields"**
 
 The **texts**, **titles** and **button texts** of all the views can be modified (`config.js` lines 34-75).
+
+
+### Retrieving the results
+
+The results of the experiment can be retrieved from [https://procomprag.herokuapp.com/]https://procomprag.herokuapp.com/

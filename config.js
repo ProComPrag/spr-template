@@ -6,9 +6,9 @@ var config = {
 	"author": "Stela",
 	"experiment_id": "test-spr-003",
 	"description": "Self-paced reading",
-	"contact_email": "stella.plamenova@gmail.com",
 	"liveExperiment": false,
 
+	"contact_email": "stella.plamenova@gmail.com",
 	// submission settings
 	// set "is_MTurk" to true if the experiment is run in MTurk
 	"is_MTurk": true,
@@ -53,21 +53,12 @@ var config = {
 
 	// practice trial view
 	"practice": {
-		"title": "Practice",
-		"text": "This is a practice trial",
-		// button text between trials
-		"buttonText": "Next",
+		"title": "Practice Trial"
 	},
 
 	// begin experiment view
 	"beginExp": {
 		"text": "Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus."
-	},
-
-	// trial view
-	"trial": {
-		// button text between trials
-		"buttonText": "Next",
 	},
 
 	// subject info view
