@@ -197,9 +197,9 @@ var initTrialView = function(trialInfo, CT) {
 	// as well as a readingTimes property with value - a list containing the reading times of each word
 	$('input[name=question]').on('change', function() {
 		$('body').off('keyup', handleKeyUp);
-		spr.data.trials[CT].timeSpent = Date.now() - startingTime - 1000;
+		spr.data.trials[CT].time_spent = Date.now() - startingTime - 1000;
 		spr.data.trials[CT].response = $('input[name=question]:checked').val();
-		spr.data.trials[CT].readingTimes = getDeltas();
+		spr.data.trials[CT].reading_times = getDeltas();
 		console.log(spr.data.trials[CT]);
 		setTimeout(function() {
 			spr.findNextView();
@@ -232,23 +232,34 @@ var initThanksView = function() {
 	var view = {};
 	view.name = 'thanks';
 	view.template = $('#thanks-view').html();
+	var HITData = getHITData();
+
 	$('#main').html(Mustache.render(view.template, {
 		thanksMessage: config.thanks.message
 	}));
+
+	var data = {
+		'author': config.author,
+		'experiment_id': config.experiment_id,
+		'trials': spr.data.trials,
+		'description': config.description,
+		'worker_id': HITData['workerId'],
+		// MTurk expects a key 'assignmentId' for the submission to work, that is why is it not consistent with the snake case that the other keys have
+		'assignmentId': HITData['assignmentId'],
+		'HIT_id': HITData['hitId']
+	};
 
 	// if the experiment is set to live (seenconfig.js liveExperiment)
 	// the results are sent to the server
 	// if it is set to false
 	// the results are shown on the thanks slide
 	if (config.liveExperiment) {
-		submitResults(config.is_MTurk, config.contact_email);
+		submitResults(config.is_MTurk, config.contact_email, data);
 	} else {
 		jQuery('<p/>', {
-			text: JSON.stringify(spr.data.trials)
+			text: JSON.stringify(data)
 		}).appendTo($('.view'));
 	}
-
-	console.log(spr.data.trials);
 
 	return view;
 };
@@ -319,7 +330,7 @@ var initSentence = function() {
 // takes two arguments:
 // 1) isMTurk - boolean; true if the experiment runs on MTurk
 // 2) contactEmail - string
-var submitResults = function(isMTurk, contactEmail) {
+var submitResults = function(isMTurk, contactEmail, data) {
 	// if isMTurk is not given, sets it to false
 	isMTurk = typeof isMTurk !== 'undefined' ? isMTurk : false;
 	// set a default contact email
@@ -329,18 +340,13 @@ var submitResults = function(isMTurk, contactEmail) {
 		type: 'POST',
 		url: 'https://procomprag.herokuapp.com/api/submit_experiment',
 		crossDomain: true,
-		data: {
-			'author': config.author,
-			'experiment_id': config.experiment_id,
-			'trials': spr.data.trials,
-			'description': config.description
-		},
+		data: data,
 		success: function (responseData, textStatus, jqXHR) {
 			console.log(textStatus)
 			if (isMTurk) {
 				// For now we still use the original turk.submit to inform MTurk that the experiment has finished.
 				// submits to MTurk's server if isMTurk = true
-				submitToMTurk();
+				submitToMTurk(data);
 			}
 			// shows a thanks message after the submission
 			$('.thanks-message').removeClass('hidden');
@@ -353,7 +359,7 @@ var submitResults = function(isMTurk, contactEmail) {
 				// Not notifying the user yet since it might cause confusion. The webapp should report errors.
 
 				// submits to MTurk's server if isMTurk = true
-				submitToMTurk();
+				submitToMTurk(data);
 				// shows a thanks message after the submission
 				$('.thanks-message').removeClass('hidden');
 			} else {
@@ -369,18 +375,12 @@ var submitResults = function(isMTurk, contactEmail) {
 };
 
 // submits to MTurk's servers
-var submitToMTurk = function() {
+var submitToMTurk = function(data) {
 
 	$.ajax({
 		type: 'POST',
 		url: config.MTurk_server,
-		data: {
-			'assignmentID': '',
-			'author': config.author,
-			'experiment_id': config.experiment_id,
-			'trials': spr.data.trials,
-			'description': config.description
-		},
+		data: data,
 		success: function() {
 			console.log('submission successful');
 		},
@@ -390,4 +390,18 @@ var submitToMTurk = function() {
 	});
 
 	console.log('submit to mturk');
+};
+
+
+var getHITData = function() {
+	var url = 'https://tictactoe.amazon.com/gamesurvey.cgi?gameid=01523&assignmentId=123RVWYBAZW00EXAMPLE456RVWYBAZW00EXAMPLE&hitId=123RVWYBAZW00EXAMPLE&turkSubmitTo=https://www.mturk.com/&workerId=AZ3456EXAMPLE';
+	/*var url = window.location.href;*/
+	var qArray = url.split('&');
+	var HITData = {};
+
+	for (var i=0; i<qArray.length; i++) {
+		HITData[qArray[i].split('=')[0]] = qArray[i].split('=')[1];
+	}
+
+	return HITData;
 };

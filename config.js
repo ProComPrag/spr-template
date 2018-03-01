@@ -1,18 +1,21 @@
-// the config provides the option of customising texts and titles across the website.
+// the config 
+// as well as the option of customising texts and titles across the website
+//
 var config = {
 	// mandatory fields - author, experiment_id, description
-	"author": "Stela Plamenova",
-	"experiment_id": "test-spr-001",
+	"author": "Stela",
+	"experiment_id": "test-spr-003",
 	"description": "Self-paced reading",
 	"contact_email": "stella.plamenova@gmail.com",
-	"liveExperiment": true,
+	"liveExperiment": false,
 
 	// submission settings
-	// set "is_MTurk" to true if the experiment is posted in MTurk
-	"is_MTurk": false,
+	// set "is_MTurk" to true if the experiment is run in MTurk
+	"is_MTurk": true,
 	// mturk's HIT submission url
-	// specify the submission url if "is_MTurk" is set to true
-	"MTurk_server": "",
+	// specify the submission url if "is_MTurk" is set to true otherwise leave blank
+	// the url for the sandbox and the live experiments are different (https://docs.aws.amazon.com/AWSMechTurk/latest/AWSMturkAPI/ApiReference_ExternalQuestionArticle.html)
+	"MTurk_server": "https://www.mturk.com/mturk/externalSubmit",
 
 	// experiment settings
 	"expSettings": {
@@ -20,10 +23,10 @@ var config = {
 		"hideImage": true,
 		// for how long the image is shown before it dissapears in ms (1000 ms = 1 sec)
 		// needed if "hideImage" is set to true
-		"showDuration": 500,
-		// one line sentence underline (true), underline below each word of the sentence with spaces inbetween (false)
+		"showDuration": 1000,
+		// set to true to make the the sentence underline one continous line or to false to make the words separated by spaces
 		"underlineOneLine": false,
-		// pause where there is only cross in the middle of the screen before the image and sentence appear
+		// blank screen before the image and sentence underline shows
 		// set to 0 if there shouldn't be a pause
 		"pause": 1000
 	},
