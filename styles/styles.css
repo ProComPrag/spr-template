@@ -68,11 +68,12 @@ a, p, li, span, button {
 .pause-container {
 	height: 100%;
 	width: 100%;
+	margin: 0 auto;
+	position: relative;
 }
 
 .pause-container .point {
-	position: fixed;
-	top: 50%;
+	position: absolute;
 	top: calc(50% - 15px);
 	left: calc(50% - 15px);
 }
@@ -90,10 +91,18 @@ a, p, li, span, button {
 	width: 500px;
 }
 
+/* temp */
 .img {
 	height: 100%;
 	width: 100%;
 	background: grey;
+}
+
+.help-text {
+	color: #555;
+	font-style: italic;
+	margin: 10px 0;
+	text-align: center;
 }
 
 .sentence-container {
@@ -187,12 +196,6 @@ input[name=question] {
 
 .clearfix {
 	clear: both;
-}
-
-.help-text {
-	color: #333;
-	font-style: italic;
-	text-align: center;
 }
 
 /*
