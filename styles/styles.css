@@ -189,11 +189,21 @@ input[name=question] {
 	clear: both;
 }
 
+.help-text {
+	color: #333;
+	font-style: italic;
+	text-align: center;
+}
+
 /*
 	classes used by the js
 */
 .nodisplay {
 	display: none;
+}
+
+.hidden {
+	visibility: hidden;
 }
 
 .visible {

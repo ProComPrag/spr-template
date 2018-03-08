@@ -4,7 +4,7 @@
 var config = {
 	// mandatory fields - author, experiment_id, description
 	"author": "Stela",
-	"experiment_id": "test-spr-003",
+	"experiment_id": "test-spr-005",
 	"description": "Self-paced reading",
 	"liveExperiment": false,
 
@@ -15,7 +15,8 @@ var config = {
 	// mturk's HIT submission url
 	// specify the submission url if "is_MTurk" is set to true otherwise leave blank
 	// the url for the sandbox and the live experiments are different (https://docs.aws.amazon.com/AWSMechTurk/latest/AWSMturkAPI/ApiReference_ExternalQuestionArticle.html)
-	"MTurk_server": "https://www.mturk.com/mturk/externalSubmit",
+	// "MTurk_server": "https://www.mturk.com/mturk/externalSubmit",
+	"MTurk_server": "https://workersandbox.mturk.com/mturk/externalSubmit",
 
 	// experiment settings
 	"expSettings": {
@@ -29,6 +30,7 @@ var config = {
 		// blank screen before the image and sentence underline shows
 		// set to 0 if there shouldn't be a pause
 		"pause": 1000,
+		// help text that appears after the image hides
 		"helpText": "Press the SPACE bar to reveal the words"
 	},
 

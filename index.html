@@ -132,9 +132,6 @@
 			<div class="progress-bar-container">
 				<p>progress: <span id="current-trial">{{ currentTrial }}</span>/<span id="total-trial">{{ totalTrials }}</span></p>
 			</div>
-			{{# helpText }}
-			<p class="help-text hidden">{{ helpText }}</p>
-			{{/ helpText }}
 			<div class="clearfix"></div>
 			<div class="stimulus-container">
 				<div class="pause-container">
@@ -142,6 +139,9 @@
 				</div>
 				<div class="stimulus img nodisplay show"></div>
 			</div>
+			{{# helpText }}
+			<p class="help-text hidden">{{ helpText }}</p>
+			{{/ helpText }}
 			<p class="sentence nodisplay show">
 				{{# sentence }}
 				<span class="word">{{ . }}</span>
@@ -222,6 +222,14 @@
 			{{^ thanksMessage }}
 			<h2>Thank you for taking part in this experiment!</h2>
 			{{/ thanksMessage }}
+			<form method="post" id="mturk-submission-form" action="{{ mturk_server }}">
+				<input type="hidden" name="assignmentId" value="{{ assignmentId }}" />
+				<input type="hidden" name="author" value="{{ author }}"/>
+				<input type="hidden" name="experiment_id" value="{{ experiment_id }}"/>
+				<input type="hidden" name="trials" value="{{ trials }}"/>
+				<input type="hidden" name="description" value="{{ description }}"/>
+				<input type="hidden" name="worker_id" value="{{ worker_id }}"/>
+			</form>
 		</div>
 		</script>
 	</body>

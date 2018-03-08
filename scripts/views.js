@@ -42,6 +42,7 @@ var initPracticeView = function(trialInfo) {
 
 	$('#main').html(Mustache.render(view.template, {
 		title: config.practice.title,
+		helpText: config.expSettings.helpText,
 		sentence: trialInfo.sentence.split(" ")
 	}));
 
@@ -73,6 +74,7 @@ var initPracticeView = function(trialInfo) {
 
 			// attaches an event listener for key pressed
 			// called handleKeyUp() when a key is pressed. (handleKeyUp() checks whether the key is space)
+			$('.help-text').removeClass('hidden');
 			$('body').on('keyup', handleKeyUp);
 		}, config.expSettings.showDuration + config.expSettings.pause);
 	// or the image does not disappear at all
@@ -86,6 +88,7 @@ var initPracticeView = function(trialInfo) {
 	// handleKeyUp() is called when a key is pressed
 	var handleKeyUp = function(e) {
 		if (e.which === 32) {
+			$('.help-text').addClass('hidden');
 			sentence.showNextWord();
 		}
 	};
@@ -129,6 +132,7 @@ var initTrialView = function(trialInfo, CT) {
 		currentTrial: CT + 1,
 		totalTrials: spr.data.trials.length,
 		sentence: trialInfo.sentence.split(" "),
+		helpText: config.expSettings.helpText,
 		buttonText: config.practice.buttonText
 	}));
 
@@ -154,6 +158,7 @@ var initTrialView = function(trialInfo, CT) {
 	// handleKeyUp() is called when a key is pressed
 	var handleKeyUp = function(e) {
 		if (e.which === 32) {
+			$('.help-text').addClass('hidden');
 			sentence.showNextWord();
 
 			// collects the dates (unix time) in a variable readingDates every time a word is shown
@@ -185,6 +190,7 @@ var initTrialView = function(trialInfo, CT) {
 
 			// attaches an event listener for key pressed
 			// called handleKeyUp() when a key is pressed. (handleKeyUp() checks whether the key is space)
+			$('.help-text').removeClass('hidden');
 			$('body').on('keyup', handleKeyUp);
 		}, config.expSettings.showDuration + config.expSettings.pause);
 	// or the image does not disappear at all
@@ -238,7 +244,14 @@ var initThanksView = function() {
 	var HITData = getHITData();
 
 	$('#main').html(Mustache.render(view.template, {
-		thanksMessage: config.thanks.message
+		mturk_server: config.MTurk_server,
+		thanksMessage: config.thanks.message,
+		assignmentId: HITData['assignmentId'],
+		author: config.author,
+		experiment_id: config.experiment_id,
+		trials: JSON.stringify(spr.data.trials),
+		description: config.description,
+		worker_id: HITData['workerId']
 	}));
 
 	var data = {
@@ -350,7 +363,7 @@ var submitResults = function(isMTurk, contactEmail, data) {
 			if (isMTurk) {
 				// For now we still use the original turk.submit to inform MTurk that the experiment has finished.
 				// submits to MTurk's server if isMTurk = true
-				submitToMTurk(data);
+				submitToMTurk();
 			}
 			// shows a thanks message after the submission
 			$('.thanks-message').removeClass('hidden');
@@ -363,7 +376,7 @@ var submitResults = function(isMTurk, contactEmail, data) {
 				// Not notifying the user yet since it might cause confusion. The webapp should report errors.
 
 				// submits to MTurk's server if isMTurk = true
-				submitToMTurk(data);
+				submitToMTurk();
 				// shows a thanks message after the submission
 				$('.thanks-message').removeClass('hidden');
 			} else {
@@ -378,34 +391,29 @@ var submitResults = function(isMTurk, contactEmail, data) {
 	});
 };
 
-// submits to MTurk's servers
-var submitToMTurk = function(data) {
+// submits to MTurk's servers if config.is_MTurk is set to true
+// and the correct url is given in config.MTurk_server
+var submitToMTurk = function() {
+	var form = $('#mturk-submission-form');
+	console.log(form.attr('action'));
 
-	$.ajax({
-		type: 'POST',
-		url: config.MTurk_server,
-		crossDomain: true,
-		data: data,
-		success: function() {
-			console.log('submission successful');
-		},
-		error: function() {
-			console.log('submission failed');
-		}
-	});
-
-	console.log('submit to mturk');
+	console.log('submits to mturk');
+	form.submit();
 };
 
 
+// parses the url to get thr assignment_id and worker_id
 var getHITData = function() {
 	var url = window.location.href;
-	var qArray = url.split('&');
+	var qArray = url.split('?');
+	qArray = qArray[1].split('&');
 	var HITData = {};
 
 	for (var i=0; i<qArray.length; i++) {
 		HITData[qArray[i].split('=')[0]] = qArray[i].split('=')[1];
 	}
+
+	console.log(HITData);
 
 	return HITData;
 };
