@@ -79,9 +79,12 @@ var initPracticeView = function(trialInfo) {
 		}, config.expSettings.showDuration + config.expSettings.pause);
 	// or the image does not disappear at all
 	} else {
-		// attaches an event listener for key pressed
-		// called handleKeyUp() when a key is pressed. (handleKeyUp() checks whether the key is space)
-		$('body').on('keyup', handleKeyUp);
+		setTimeout(function() {
+			// attaches an event listener for key pressed
+			// called handleKeyUp() when a key is pressed. (handleKeyUp() checks whether the key is space)
+			$('.help-text').removeClass('hidden');
+			$('body').on('keyup', handleKeyUp);
+		}, 0);
 	}
 
 	// checks whether the key pressed is space and if so calls sentence.showNextWord()
@@ -195,9 +198,12 @@ var initTrialView = function(trialInfo, CT) {
 		}, config.expSettings.showDuration + config.expSettings.pause);
 	// or the image does not disappear at all
 	} else {
-		// attaches an event listener for key pressed
-		// called handleKeyUp() when a key is pressed. (handleKeyUp() checks whether the key is space)
-		$('body').on('keyup', handleKeyUp);
+		setTimeout(function() {
+			// attaches an event listener for key pressed
+			// called handleKeyUp() when a key is pressed. (handleKeyUp() checks whether the key is space)
+			$('.help-text').removeClass('hidden');
+			$('body').on('keyup', handleKeyUp);
+		}, 0);
 	}
 
 	// attaches an event listener to the yes / no radio inputs

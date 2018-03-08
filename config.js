@@ -29,7 +29,7 @@ var config = {
 		"underlineOneLine": false,
 		// blank screen before the image and sentence underline shows
 		// set to 0 if there shouldn't be a pause
-		"pause": 1000,
+		"pause": 700,
 		// help text that appears after the image hides
 		"helpText": "Press the SPACE bar to reveal the words"
 	},
