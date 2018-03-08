@@ -59,6 +59,7 @@ a, p, li, span, button {
 	practice trial and trial related styles
 */
 
+
 .progress-bar-container {
 	float: right;
 	margin: -20px 0 40px 0;
@@ -70,23 +71,29 @@ a, p, li, span, button {
 }
 
 .pause-container .point {
-	background: #333;
-	border-radius: 50%;
-	height: 20px;
-	width: 20px;
-	margin: calc(50% - 100px) auto auto auto;
+	position: fixed;
+	top: 50%;
+	top: calc(50% - 15px);
+	left: calc(50% - 15px);
 }
 
 .stimulus-container {
-	height: 380px;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 300px;
 	margin: 0 auto;
 	width: 500px;
 }
 
 .img {
-	background: #555;
 	height: 100%;
 	width: 100%;
+	background: grey;
 }
 
 .sentence-container {

@@ -5,8 +5,9 @@ var initIntroView = function() {
 	view.template = $('#intro-view').html();
 	$('#main').html(Mustache.render(view.template, {
 		title: config.intro.title,
+		logo: config.intro.logo,
 		text: config.intro.text,
-		button: config.intro.buttonText
+		buttonText: config.intro.buttonText
 	}));
 
 	showNextView();
@@ -23,7 +24,7 @@ var initInstructionsView = function() {
 	$('#main').html(Mustache.render(view.template, {
 		title: config.instructions.title,
 		text: config.instructions.text,
-		button: config.instructions.buttonText
+		buttonText: config.instructions.buttonText
 	}));
 
 	showNextView();
@@ -111,6 +112,7 @@ var initBeginExpView = function() {
 	return view;
 };
 
+
 // creates Trial View
 var initTrialView = function(trialInfo, CT) {
 	var view = {};
@@ -197,9 +199,10 @@ var initTrialView = function(trialInfo, CT) {
 	// as well as a readingTimes property with value - a list containing the reading times of each word
 	$('input[name=question]').on('change', function() {
 		$('body').off('keyup', handleKeyUp);
-		spr.data.trials[CT].time_spent = Date.now() - startingTime - 1000;
+		spr.data.trials[CT].time_spent = Date.now() - startingTime - config.expSettings.pause;
 		spr.data.trials[CT].response = $('input[name=question]:checked').val();
 		spr.data.trials[CT].reading_times = getDeltas();
+		spr.data.trials[CT].trial_number = CT + 1;
 		console.log(spr.data.trials[CT]);
 		setTimeout(function() {
 			spr.findNextView();
@@ -342,7 +345,8 @@ var submitResults = function(isMTurk, contactEmail, data) {
 		crossDomain: true,
 		data: data,
 		success: function (responseData, textStatus, jqXHR) {
-			console.log(textStatus)
+			console.log(textStatus);
+
 			if (isMTurk) {
 				// For now we still use the original turk.submit to inform MTurk that the experiment has finished.
 				// submits to MTurk's server if isMTurk = true
@@ -380,6 +384,7 @@ var submitToMTurk = function(data) {
 	$.ajax({
 		type: 'POST',
 		url: config.MTurk_server,
+		crossDomain: true,
 		data: data,
 		success: function() {
 			console.log('submission successful');
@@ -394,8 +399,7 @@ var submitToMTurk = function(data) {
 
 
 var getHITData = function() {
-	var url = 'https://tictactoe.amazon.com/gamesurvey.cgi?gameid=01523&assignmentId=123RVWYBAZW00EXAMPLE456RVWYBAZW00EXAMPLE&hitId=123RVWYBAZW00EXAMPLE&turkSubmitTo=https://www.mturk.com/&workerId=AZ3456EXAMPLE';
-	/*var url = window.location.href;*/
+	var url = window.location.href;
 	var qArray = url.split('&');
 	var HITData = {};
 

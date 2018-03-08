@@ -38,35 +38,67 @@
 		<!-- Introduction view -->
 		<script id="intro-view" type="x-tmpl-mustache">
 		<div class='view'>
+			{{# logo }}
+			<img class="logo" src={{ logo }} height="20" />
+			{{/ logo }}
+			{{# title }}
 			<h2 class="title">{{ title }}</h2>
+			{{/ title }}
+			{{^ title }}
+			<h2 class="title">Welcome!</h2>
+			{{/ title }}
+			{{# text }}
 			<section class="text-container">
 				<p class="text">{{ text }}</p>
 			</section>
-			<button class="btn next-view">{{ button }}</button>
+			{{/ text }}
+			{{# buttonText }}
+			<button class="btn next-view">{{ buttonText }}</button>
+			{{/ buttonText }}
+			{{^ buttonText }}
+			<button class="btn next-view">Start The Experiment</button>
+			{{/ buttonText }}
 		</div>
 		</script>
 
 		<!-- Instructions view -->
 		<script id="instructions-view" type="x-tmpl-mustache">
 		<div class="view">
-			<h2>{{ title }}</h2>
+			{{# title }}
+			<h2 class="title">{{ title }}</h2>
+			{{/ title }}
+			{{^ title }}
+			<h2 class="title">Instructions</h2>
+			{{/ title }}
+			{{# text }}
 			<section class="text-container">
 				<p class="text">{{ text }}</p>
 			</section>
-			<button class="btn next-view">{{ button }}</button>
+			{{/ text }}
+			{{# buttonText }}
+			<button class="btn next-view">{{ buttonText }}</button>
+			{{/ buttonText }}
+			{{^ buttonText }}
+			<button class="btn next-view">To The Practice Trial</button>
+			{{/ buttonText }}
 		</view>
 		</script>
 
 		<!-- Practice trial view -->
 		<script id="practice-view" type="x-tmpl-mustache">
 		<div class="view">
-			<h2>{{ title }}</h2>
-			<div class="pause-container">
-				<div class="point"></div>
-			</div>
+			{{# title }}
+			<h2 class="title">{{ title }}</h2>
+			{{/ title }}
 			<div class="stimulus-container">
+				<div class="pause-container">
+					<img class="point" src="images/cross.png" height="30" width="30" />
+				</div>
 				<div class="stimulus img nodisplay show"></div>
 			</div>
+			{{# helpText }}
+			<p class="help-text hidden">{{ helpText }}</p>
+			{{/ helpText }}
 			<p class="sentence nodisplay show">
 				{{# sentence }}
 				<span class="word">{{ . }}</span>
@@ -85,8 +117,12 @@
 		<!-- Begin Experiment view -->
 		<script id="begin-exp-view" type="x-tmpl-mustache">
 		<div class="view">
-			<p>{{ text }}</p>
-			<button class="btn next-view">Begin Experiment</button>
+			{{# text }}
+			<section class="text-container">
+				<p class="text">{{ text }}</p>
+			</section>
+			{{/ text }}
+			<button class="btn next-view">Start the Experiment</button>
 		</div>
 		</script>
 
@@ -96,11 +132,14 @@
 			<div class="progress-bar-container">
 				<p>progress: <span id="current-trial">{{ currentTrial }}</span>/<span id="total-trial">{{ totalTrials }}</span></p>
 			</div>
+			{{# helpText }}
+			<p class="help-text hidden">{{ helpText }}</p>
+			{{/ helpText }}
 			<div class="clearfix"></div>
-			<div class="pause-container">
-				<div class="point"></div>
-			</div>
 			<div class="stimulus-container">
+				<div class="pause-container">
+					<img class="point" src="images/cross.png" height="30" width="30" />
+				</div>
 				<div class="stimulus img nodisplay show"></div>
 			</div>
 			<p class="sentence nodisplay show">
@@ -121,8 +160,17 @@
 		<!-- subject info view -->
 		<script id="subj-info-view" type="x-tmpl-mustache">
 		<div class="view subj-info-templ">
-			<h2>{{ title }}</h2>
-			<p class="text">{{ text }}</p>
+			{{# title }}
+			<h2 class="title">{{ title }}</h2>
+			{{/ title }}
+			{{^ title }}
+			<h2 class="title">Additional Information</h2>
+			{{/ title }}
+			{{# text }}
+			<section class="text-container">
+				<p class="text">{{ text }}</p>
+			</section>
+			{{/ text }}
 			<form>
 				<p>
 					<label for="age">Age:</label>
@@ -155,7 +203,12 @@
 					<textarea name="comments" id="comments"
 					rows="6" cols="40"></textarea>
 				</p>
+				{{# buttonText }}
 				<button id="sends-data" class="btn next-view sends-data">{{ buttonText }}</button>
+				{{/ buttonText }}
+				{{^ buttonText }}
+				<button id="sends-data" class="btn next-view sends-data">Next</button>
+				{{/ buttonText }}
 			</form>
 		</div>
 		</script>
@@ -163,7 +216,12 @@
 		<!-- thanks view -->
 		<script id="thanks-view" type="x-tmpl-mustache">
 		<div class="view">
+			{{# thanksMessage }}
 			<h2>{{ thanksMessage }}</h2>
+			{{/ thanksMessage }}
+			{{^ thanksMessage }}
+			<h2>Thank you for taking part in this experiment!</h2>
+			{{/ thanksMessage }}
 		</div>
 		</script>
 	</body>
