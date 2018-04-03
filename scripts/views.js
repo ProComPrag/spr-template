@@ -58,15 +58,14 @@ var initPracticeView = function(trialInfo) {
     // hides the fixation point and shows the stimulus
     var showStimulus = function() {
         $('.stimulus').removeClass('nodisplay');
-        $('.pause-container').addClass('nodisplay');
+        $('.cross-container').addClass('nodisplay');
     };
 
-    // shows the QUD for a second and then the fixation cross appears
-    // calls showStimulus after a 'pause' amount of time
+    // blank screen
     setTimeout(function() {
-        $('.pause-container').removeClass('nodisplay');
-        setTimeout(showStimulus, config.expSettings.pause);     
-    }, 0);
+        $('.cross-container').removeClass('nodisplay');
+        setTimeout(showStimulus, config.expSettings.crossDuration);     
+    }, config.expSettings.pause);
 
 
     // checks the expSettings in config.js and depending on the settings
@@ -81,14 +80,14 @@ var initPracticeView = function(trialInfo) {
             // called handleKeyUp() when a key is pressed. (handleKeyUp() checks whether the key is space)
             $('.help-text').removeClass('hidden');
             $('body').on('keyup', handleKeyUp);
-        }, config.expSettings.showDuration + config.expSettings.pause);
+        }, config.expSettings.showDuration + config.expSettings.pause + config.expSettings.crossDuration);
     // or the image does not disappear at all
     } else {
          setTimeout(function() {
             $('.help-text').removeClass('hidden');
             $('.sentence').removeClass('nodisplay');
             $('body').on('keyup', handleKeyUp);
-        }, config.expSettings.pause);
+        }, config.expSettings.pause + config.expSettings.crossDuration);
     }
 
     // checks whether the key pressed is space and if so calls sentence.showNextWord()
@@ -155,15 +154,15 @@ var initTrialView = function(trialInfo, CT) {
     // hides the fixation point and shows the stimulus
     var showStimulus = function() {
         $('.stimulus').removeClass('nodisplay');
-        $('.pause-container').addClass('nodisplay');
+        $('.cross-container').addClass('nodisplay');
     };
 
     // shows the QUD for a second and then the fixation cross appears
     // calls showStimulus after a 'pause' amount of time
     setTimeout(function() {
-        $('.pause-container').removeClass('nodisplay');
-        setTimeout(showStimulus, config.expSettings.pause);
-    }, 0);
+        $('.cross-container').removeClass('nodisplay');
+        setTimeout(showStimulus, config.expSettings.crossDuration);
+    }, config.expSettings.pause);
 
     // checks whether the key pressed is space and if so calls sentence.showNextWord()
     // handleKeyUp() is called when a key is pressed
@@ -204,14 +203,14 @@ var initTrialView = function(trialInfo, CT) {
             // called handleKeyUp() when a key is pressed. (handleKeyUp() checks whether the key is space)
             $('.help-text').removeClass('hidden');
             $('body').on('keyup', handleKeyUp);
-        }, config.expSettings.showDuration + config.expSettings.pause);
+        }, config.expSettings.showDuration + config.expSettings.pause + config.expSettings.crossDuration);
     // or the image does not disappear at all
     } else {
         setTimeout(function() {
             $('.help-text').removeClass('hidden');
             $('.sentence').removeClass('nodisplay');
             $('body').on('keyup', handleKeyUp);
-        }, config.expSettings.pause);
+        }, config.expSettings.pause + config.expSettings.crossDuration);
     }
 
     // attaches an event listener to the yes / no radio inputs
@@ -219,7 +218,7 @@ var initTrialView = function(trialInfo, CT) {
     // as well as a readingTimes property with value - a list containing the reading times of each word
     $('input[name=question]').on('change', function() {
         $('body').off('keyup', handleKeyUp);
-        spr.data.trials[CT].time_spent = Date.now() - startingTime - config.expSettings.pause;
+        spr.data.trials[CT].time_spent = Date.now() - startingTime - config.expSettings.pause - config.expSettings.crossDuration;
         spr.data.trials[CT].response = $('input[name=question]:checked').val();
         spr.data.trials[CT].reading_times = getDeltas();
         spr.data.trials[CT].trial_number = CT + 1;
