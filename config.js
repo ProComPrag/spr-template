@@ -24,12 +24,12 @@ var config = {
 		"hideImage": true,
 		// for how long the image is shown before it dissapears in ms (1000 ms = 1 sec)
 		// needed if "hideImage" is set to true
-		"showDuration": 1000,
+		"showDuration": 2000,
 		// set to true to make the the sentence underline one continous line or to false to make the words separated by spaces
 		"underlineOneLine": false,
 		// blank screen before the image and sentence underline shows
 		// set to 0 if there shouldn't be a pause
-		"pause": 700,
+		"pause": 1000,
 		// help text that appears after the image hides
 		"helpText": "Press the SPACE bar to reveal the words"
 	},
