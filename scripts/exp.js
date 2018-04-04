@@ -17,6 +17,10 @@ var initExp = function() {
 		{"sentence": "None of the balls are black in the picture"}
 	];
 
+	var practice_trials = [
+		{"sentence": "Most of the balls are white in the picture"},
+		{"sentence": "All of the balls are black in the picture"}
+	];
 
 	// function that shuffles the items in a list
 	var shuffleComb = function(comb) {
@@ -36,10 +40,7 @@ var initExp = function() {
 
 	// each time initExp() is called, items in data.trials are shuffled
 	data.trials = shuffleComb(trials_raw);
-	data.practice_trials = [
-		{"sentence": "Most of the balls are white in the picture"},
-		{"sentence": "All of the balls are black in the picture"}
-	];
+	data.practice_trials = practice_trials;
 	data.out = [];
 
 	return data;
