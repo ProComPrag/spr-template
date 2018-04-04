@@ -1,3 +1,5 @@
+# Currently it doesn't work
+
 # A template for creating self-paced reading (spr) experiments
 
 An example of a self paced reading experiment can be found: (to be completed).

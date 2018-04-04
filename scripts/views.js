@@ -1,13 +1,13 @@
 // creates the Introduction view
-var initIntroView = function() {
+var initIntroView = function(CT) {
     var view = {};
     view.name = 'intro';
     view.template = $('#intro-view').html();
     $('#main').html(Mustache.render(view.template, {
-        title: config.intro.title,
-        logo: config.intro.logo,
-        text: config.intro.text,
-        buttonText: config.intro.buttonText
+        title: config_views.intro.title,
+        logo: config_views.intro.logo,
+        text: config_views.intro.text,
+        buttonText: config_views.intro.buttonText
     }));
 
     showNextView();
@@ -17,14 +17,14 @@ var initIntroView = function() {
 
 
 // creates Instruction view
-var initInstructionsView = function() {
+var initInstructionsView = function(CT) {
     var view = {};
     view.name = 'instructions';
     view.template = $("#instructions-view").html();
     $('#main').html(Mustache.render(view.template, {
-        title: config.instructions.title,
-        text: config.instructions.text,
-        buttonText: config.instructions.buttonText
+        title: config_views.instructions.title,
+        text: config_views.instructions.text,
+        buttonText: config_views.instructions.buttonText
     }));
 
     showNextView();
@@ -34,20 +34,21 @@ var initInstructionsView = function() {
 
 
 // creates Practice view
-var initPracticeView = function(trialInfo) {
+var initPracticeView = function(CT) {
     var view = {};
     view.name = 'practice',
     view.template = $('#practice-view').html();
+    var trialInfo = exp.data.practice_trials;
     var sentence = initSentence();
 
     $('#main').html(Mustache.render(view.template, {
-        title: config.practice.title,
-        helpText: config.expSettings.helpText,
-        sentence: trialInfo.sentence.split(" ")
+        title: config_views.practice.title,
+        helpText: config_general.expSettings.helpText,
+        sentence: exp.data.trials[CT].sentence.split(" ")
     }));
 
     // creates one continuous underline below the sentence if it was set to true in config.js
-    if (config.expSettings.underlineOneLine === true) {
+    if (config_general.expSettings.underlineOneLine === true) {
         var words = $(".word");
 
         for (var i=0; i<words.length; i++) {
@@ -64,13 +65,13 @@ var initPracticeView = function(trialInfo) {
     // blank screen
     setTimeout(function() {
         $('.cross-container').removeClass('nodisplay');
-        setTimeout(showStimulus, config.expSettings.crossDuration);     
-    }, config.expSettings.pause);
+        setTimeout(showStimulus, config_general.expSettings.crossDuration);     
+    }, config_general.expSettings.pause);
 
 
     // checks the expSettings in config.js and depending on the settings
     // either show the image for a particular amount of time
-    if (config.expSettings.hideImage === true) {
+    if (config_general.expSettings.hideImage === true) {
         setTimeout(function() {
             // add a css class to the image to hide it
             $('.img').addClass('nodisplay');
@@ -80,14 +81,14 @@ var initPracticeView = function(trialInfo) {
             // called handleKeyUp() when a key is pressed. (handleKeyUp() checks whether the key is space)
             $('.help-text').removeClass('hidden');
             $('body').on('keyup', handleKeyUp);
-        }, config.expSettings.showDuration + config.expSettings.pause + config.expSettings.crossDuration);
+        }, config_general.expSettings.showDuration + config_general.expSettings.pause + config_general.expSettings.crossDuration);
     // or the image does not disappear at all
     } else {
          setTimeout(function() {
             $('.help-text').removeClass('hidden');
             $('.sentence').removeClass('nodisplay');
             $('body').on('keyup', handleKeyUp);
-        }, config.expSettings.pause + config.expSettings.crossDuration);
+        }, config_general.expSettings.pause + config_general.expSettings.crossDuration);
     }
 
     // checks whether the key pressed is space and if so calls sentence.showNextWord()
@@ -101,19 +102,19 @@ var initPracticeView = function(trialInfo) {
 
     $('input[name=question]').on('change', function() {
         $('body').off('keyup', handleKeyUp);
-        spr.findNextView();
+        exp.findNextView();
     });
 
     return view;
 };
 
 // creates Begin experiment view
-var initBeginExpView = function() {
+var initBeginExpView = function(CT) {
     var view = {};
     view.name = 'beginExp';
     view.template = $('#begin-exp-view').html();
     $('#main').html(Mustache.render(view.template, {
-        text: config.beginExp.text
+        text: config_views.beginExp.text
     }));
 
     showNextView();
@@ -123,27 +124,26 @@ var initBeginExpView = function() {
 
 
 // creates Trial View
-var initTrialView = function(trialInfo, CT) {
+var initTrialView = function(CT) {
     var view = {};
     view.name = 'trial';
     view.template = $('#trial-view').html();
     var readingDates = [];
     var readingTimes = [];
-    var rtCount = trialInfo.sentence.split(" ").length;
+    var rtCount = exp.data.trials[CT].sentence.split(" ").length;
     var sentence = initSentence();
     var startingTime = Date.now();
 
     // renders the templ
     $('#main').html(Mustache.render(view.template, {
         currentTrial: CT + 1,
-        totalTrials: spr.data.trials.length,
-        sentence: trialInfo.sentence.split(" "),
-        helpText: config.expSettings.helpText,
-        buttonText: config.practice.buttonText
+        totalTrials: exp.data.trials.length,
+        sentence: exp.data.trials[CT].sentence.split(" "),
+        helpText: config_general.expSettings.helpText,
     }));
 
     // creates one continuous underline below the sentence if it was set to true in config.js
-    if (config.expSettings.underlineOneLine === true) {
+    if (config_general.expSettings.underlineOneLine === true) {
         var words = $(".word");
 
         for (var i=0; i<words.length; i++) {
@@ -161,8 +161,8 @@ var initTrialView = function(trialInfo, CT) {
     // calls showStimulus after a 'pause' amount of time
     setTimeout(function() {
         $('.cross-container').removeClass('nodisplay');
-        setTimeout(showStimulus, config.expSettings.crossDuration);
-    }, config.expSettings.pause);
+        setTimeout(showStimulus, config_general.expSettings.crossDuration);
+    }, config_general.expSettings.pause);
 
     // checks whether the key pressed is space and if so calls sentence.showNextWord()
     // handleKeyUp() is called when a key is pressed
@@ -193,7 +193,7 @@ var initTrialView = function(trialInfo, CT) {
 
     // checks the expSettings in config.js and depending on the settings
     // either show the image for a particular amount of time
-    if (config.expSettings.hideImage === true) {
+    if (config_general.expSettings.hideImage === true) {
         setTimeout(function() {
             // add a css class to the image to hide it
             $('.img').addClass('nodisplay');
@@ -203,14 +203,14 @@ var initTrialView = function(trialInfo, CT) {
             // called handleKeyUp() when a key is pressed. (handleKeyUp() checks whether the key is space)
             $('.help-text').removeClass('hidden');
             $('body').on('keyup', handleKeyUp);
-        }, config.expSettings.showDuration + config.expSettings.pause + config.expSettings.crossDuration);
+        }, config_general.expSettings.showDuration + config_general.expSettings.pause + config_general.expSettings.crossDuration);
     // or the image does not disappear at all
     } else {
         setTimeout(function() {
             $('.help-text').removeClass('hidden');
             $('.sentence').removeClass('nodisplay');
             $('body').on('keyup', handleKeyUp);
-        }, config.expSettings.pause + config.expSettings.crossDuration);
+        }, config_general.expSettings.pause + config_general.expSettings.crossDuration);
     }
 
     // attaches an event listener to the yes / no radio inputs
@@ -218,13 +218,16 @@ var initTrialView = function(trialInfo, CT) {
     // as well as a readingTimes property with value - a list containing the reading times of each word
     $('input[name=question]').on('change', function() {
         $('body').off('keyup', handleKeyUp);
-        spr.data.trials[CT].time_spent = Date.now() - startingTime - config.expSettings.pause - config.expSettings.crossDuration;
-        spr.data.trials[CT].response = $('input[name=question]:checked').val();
-        spr.data.trials[CT].reading_times = getDeltas();
-        spr.data.trials[CT].trial_number = CT + 1;
-        console.log(spr.data.trials[CT]);
+        var trialData = {
+            time_spent: Date.now() - startingTime - config_general.expSettings.pause - config_general.expSettings.crossDuration,
+            response: $('input[name=question]:checked').val(),
+            reading_times: getDeltas(),
+            trial_number: CT + 1
+        };
+        exp.data.out.push(trialData);
+        console.log(exp.data.out);
         setTimeout(function() {
-            spr.findNextView();
+            exp.findNextView();
         }, 200);
     });
 
@@ -233,14 +236,14 @@ var initTrialView = function(trialInfo, CT) {
 
 
 // creates Subject Info View
-var initSubjInfoView = function() {
+var initPostTestView = function(CT) {
     var view = {};
     view.name = 'subjInfo';
     view.template = $('#subj-info-view').html();
     $('#main').html(Mustache.render(view.template, {
-        title: config.subjInfo.title,
-        text: config.subjInfo.text,
-        buttonText: config.subjInfo.buttonText
+        title: config_views.subjInfo.title,
+        text: config_views.subjInfo.text,
+        buttonText: config_views.subjInfo.buttonText
     }));
 
     showNextView();
@@ -257,21 +260,21 @@ var initThanksView = function() {
     var HITData = getHITData();
 
     $('#main').html(Mustache.render(view.template, {
-        mturk_server: config.MTurk_server,
-        thanksMessage: config.thanks.message,
+        thanksMessage: config_views.thanks.message,
+        mturk_server: config_deploy.MTurk_server,
         assignmentId: HITData['assignmentId'],
-        author: config.author,
-        experiment_id: config.experiment_id,
-        trials: JSON.stringify(spr.data.trials),
-        description: config.description,
+        author: config_deploy.author,
+        experiment_id: config_deploy.experiment_id,
+        trials: JSON.stringify(exp.data.trials),
+        description: config_deploy.description,
         worker_id: HITData['workerId']
     }));
 
     var data = {
-        'author': config.author,
-        'experiment_id': config.experiment_id,
-        'trials': spr.data.trials,
-        'description': config.description,
+        'author': config_deploy.author,
+        'experiment_id': config_deploy.experiment_id,
+        'trials': exp.data.trials,
+        'description': config_deploy.description,
         'worker_id': HITData['workerId'],
         // MTurk expects a key 'assignmentId' for the submission to work, that is why is it not consistent with the snake case that the other keys have
         'assignmentId': HITData['assignmentId'],
@@ -297,28 +300,28 @@ var initThanksView = function() {
 // HELPERS:
 // functions shared between more than two views or long functions
 
-// attached spr.findNextView() function to all the buttons that bring
+// attached exp.findNextView() function to all the buttons that bring
 // the next view when clicked. Which view should be shown is determined by 
-// the conditionals in spr.findNextView() which is located in main.js
+// the conditionals in exp.findNextView() which is located in main.js
 var showNextView = function() {
     var nexts = $('.next-view');
 
     for (var i=0; i<nexts.length; i++){
         if (nexts[i].id === 'sends-data') {
             nexts[i].addEventListener('click', function() {
-                for (var i=0; i<spr.data.trials.length; i++) {
-                    spr.data.trials[i].age = $('#age').val(),
-                    spr.data.trials[i].gender = $('#gender').val(),
-                    spr.data.trials[i].education = $('#education').val(),
-                    spr.data.trials[i].languages = $('#languages').val(),
-                    spr.data.trials[i].comments = $('#comments').val().trim()
+                for (var i=0; i<exp.data.trials.length; i++) {
+                    exp.data.trials[i].age = $('#age').val(),
+                    exp.data.trials[i].gender = $('#gender').val(),
+                    exp.data.trials[i].education = $('#education').val(),
+                    exp.data.trials[i].languages = $('#languages').val(),
+                    exp.data.trials[i].comments = $('#comments').val().trim()
                 }
 
-                spr.findNextView();
+                exp.findNextView();
             });
         } else {
             nexts[i].addEventListener('click', function() {
-                spr.findNextView();
+                exp.findNextView();
             });
         }
     }
