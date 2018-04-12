@@ -7,7 +7,9 @@ var initBeginExpView = function(CT) {
         text: config_views.beginExp.text
     }));
 
-    showNextView();
+    $('#next').on('click', function() {
+        exp.findNextView(); 
+    });
 
     return view;
 };

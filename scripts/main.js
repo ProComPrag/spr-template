@@ -19,9 +19,11 @@ var exp = {};
 // shows each view (in the orders defined in 'config_general') for
 // the given number of steps (as defined in 'config_general')
 exp.findNextView = function() {
+    // shows the same view template
     if (this.currentViewStepCounter < config_general.viewSteps[this.currentViewCounter]) {
         this.view = window[config_general.viewFunctions[this.currentViewCounter]](this.currentViewStepCounter);
-        this.currentViewStepCounter ++; 
+        this.currentViewStepCounter ++;
+    // shows the same view template
     } else {
         this.currentViewCounter ++; 
         this.currentViewStepCounter = 0;
@@ -30,32 +32,16 @@ exp.findNextView = function() {
     }
 };
 
+// creates and sets variables when the page is loaded.
 exp.init = function() {
-    /*// CPT - current practice trial
-    this.CPT = 0;
-
-    // CT - current trial
-    this.CT = 0;
-
-
-    // generated the view
-    this.view = initIntroView();
-    
-    // to be done: get TT and TPT from the model, this now is a temp solution
-    // TPT - total practice trials
-    this.TPT = practice_trials.length;
-
-    // TT - total trials
-    this.TT = this.data.trials.length;*/
-
-    // record current date and time
+    console.log('exp created');
+    this.data = initExp();
     this.startDate = Date();
     this.startTime = Date.now();
+    this.data.userAgent = window.navigator.userAgent;
 
     // initialize counters and generate first view
     this.currentViewCounter = 0;
     this.currentViewStepCounter = 0;
     this.view = this.findNextView();
-    // generates the experiment and assigns it to this.data
-    this.data = initExp();
 };

@@ -4,8 +4,8 @@ var config_views = {
 	"intro": {
 		// introduction title
 		"title": "Welcome to XPrag experiments!",
-		// logo
-		"logo": "images/xprag-logo.png",
+		// text that asks for ID (used when the config_deploy.deployMethod is Prolific, directLink)
+		"IDtext": "Please enter your Prolific ID:",
 		// introduction text
 		"text": "Lorem ipsum dolor sit amet consectetur adipiscing elit tellus auctor, risus metus mauris nibh leo senectus varius taciti bibendum, laoreet tempor orci ligula iaculis odio malesuada nostra. Erat gravida consequat nunc pharetra libero tempus lobortis placerat, laoreet vitae eget vivamus eros luctus sed nullam auctor, vel sem hac quam facilisis aptent blandit. Bibendum molestie morbi ullamcorper vitae accumsan dapibus ultricies aliquet mi luctus, ante suscipit purus consequat nascetur a senectus cras donec.",
 		// instroduction's slide proceeding button
@@ -33,7 +33,7 @@ var config_views = {
 	},
 
 	// subject info view
-	"subjInfo": {
+	"postTest": {
 		"title": "Additional Information",
 		"text": "Answering the following questions is optional, but will help us understand your answers.",
 		"buttonText": "Continue",

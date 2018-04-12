@@ -6,10 +6,12 @@ var initInstructionsView = function(CT) {
     $('#main').html(Mustache.render(view.template, {
         title: config_views.instructions.title,
         text: config_views.instructions.text,
-        buttonText: config_views.instructions.buttonText
+        button: config_views.instructions.buttonText
     }));
 
-    showNextView();
+    $('#next').on('click', function() {
+        exp.findNextView(); 
+    });
 
     return view;
 };
