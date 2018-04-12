@@ -1,8 +1,9 @@
-// submits data to the uni server and MTurk's server if the experiment runs on MTurk
-// takes two arguments:
+// submits data to the server and MTurk's server if the experiment runs on MTurk
+// takes three arguments:
 // 1) isMTurk - boolean; true if the experiment runs on MTurk
 // 2) contactEmail - string
-var submitResults = function(isMTurk, contactEmail, data) {
+// 3) trials
+var submitResults = function(contactEmail, data) {
     // if isMTurk is not given, sets it to false
     isMTurk = typeof isMTurk !== 'undefined' ? isMTurk : false;
     // set a default contact email
@@ -12,12 +13,12 @@ var submitResults = function(isMTurk, contactEmail, data) {
         type: 'POST',
         url: 'https://procomprag.herokuapp.com/api/submit_experiment',
         crossDomain: true,
-        data: data,
+        contentType: 'application/json',
+        data: JSON.stringify(data),
         success: function (responseData, textStatus, jqXHR) {
             console.log(textStatus);
 
-            if (isMTurk) {
-                // For now we still use the original turk.submit to inform MTurk that the experiment has finished.
+            if (config_deploy.is_MTurk) {
                 // submits to MTurk's server if isMTurk = true
                 submitToMTurk();
             }
@@ -26,7 +27,7 @@ var submitResults = function(isMTurk, contactEmail, data) {
         },
         error: function (responseData, textStatus, errorThrown) {
             // There is this consideration about whether we should still allow such a submission that failed on our side to proceed on submitting to MTurk. Maybe we should after all.
-            if (isMTurk) {
+            if (config_deploy.is_MTurk) {
                 // For now we still use the original turk.submit to inform MTurk that the experiment has finished.
                 // Stela might have another implementation which submits only the participant id.
                 // Not notifying the user yet since it might cause confusion. The webapp should report errors.

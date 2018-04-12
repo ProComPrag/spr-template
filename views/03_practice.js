@@ -5,11 +5,12 @@ var initPracticeView = function(CT) {
     view.template = $('#practice-view').html();
     var trialInfo = exp.data.practice_trials;
     var sentence = initSentence();
+    var trialInfo = exp.data.trials[CT];
 
     $('#main').html(Mustache.render(view.template, {
         title: config_views.practice.title,
         helpText: config_general.expSettings.helpText,
-        sentence: exp.data.trials[CT].sentence.split(" ")
+        sentence: trialInfo.sentence.split(" ")
     }));
 
     // creates one continuous underline below the sentence if it was set to true in config.js

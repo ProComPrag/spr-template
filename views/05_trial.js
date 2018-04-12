@@ -3,6 +3,7 @@ var initTrialView = function(CT) {
     var view = {};
     view.name = 'trial';
     view.template = $('#trial-view').html();
+    var trialInfo = exp.data.trials[CT];
     var readingDates = [];
     var readingTimes = [];
     var rtCount = exp.data.trials[CT].sentence.split(" ").length;
@@ -13,7 +14,7 @@ var initTrialView = function(CT) {
     $('#main').html(Mustache.render(view.template, {
         currentTrial: CT + 1,
         totalTrials: exp.data.trials.length,
-        sentence: exp.data.trials[CT].sentence.split(" "),
+        sentence: trialInfo.sentence.split(" "),
         helpText: config_general.expSettings.helpText,
     }));
 
@@ -93,14 +94,20 @@ var initTrialView = function(CT) {
     // as well as a readingTimes property with value - a list containing the reading times of each word
     $('input[name=question]').on('change', function() {
         $('body').off('keyup', handleKeyUp);
-        var trialData = {
-            time_spent: Date.now() - startingTime - config_general.expSettings.pause - config_general.expSettings.crossDuration,
-            response: $('input[name=question]:checked').val(),
-            reading_times: getDeltas(),
-            trial_number: CT + 1
-        };
+        var trialData = {};
+
+        for (var prop in trialInfo) {
+            if (trialInfo.hasOwnProperty(prop)) {
+                trialData[prop] = trialInfo[prop];
+            }
+        }
+
+        trialData.time_spent = Date.now() - startingTime;
+        trialData.trial_number = CT + 1;
+        trialData.response = $('input[name=question]:checked').val();
+        trialData.reading_times = getDeltas();
         exp.data.out.push(trialData);
-        console.log(exp.data.out);
+
         setTimeout(function() {
             exp.findNextView();
         }, 200);

@@ -36,7 +36,7 @@ var initSentence = function() {
     var currentWord = -1;
 
     // picks the word that should be shown when space is clicked
-    // when there are no more words to show, the question appears
+    // when there are no more words to show, the response buttons and help text appear
     sentence.showNextWord = function() {
         var words = $('.word').toArray();
 
