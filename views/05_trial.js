@@ -1,22 +1,25 @@
 // creates Trial View
-var initTrialView = function(CT) {
+var initTrialView = function(index) {
     var view = {};
     view.name = 'trial';
     view.template = $('#trial-view').html();
-    var trialInfo = exp.data.trials[CT];
+    var trialInfo = exp.data.trials[index];
+    var filled = index * (180 / config_general.viewSteps[exp.currentViewCounter]);
     var readingDates = [];
     var readingTimes = [];
-    var rtCount = exp.data.trials[CT].sentence.split(" ").length;
+    var rtCount = exp.data.trials[index].sentence.split(" ").length;
     var sentence = initSentence();
     var startingTime = Date.now();
 
     // renders the templ
     $('#main').html(Mustache.render(view.template, {
-        currentTrial: CT + 1,
+        currentTrial: index + 1,
         totalTrials: exp.data.trials.length,
         sentence: trialInfo.sentence.split(" "),
         helpText: config_general.expSettings.helpText,
     }));
+
+    $('#filled').css('width', filled);
 
     // creates one continuous underline below the sentence if it was set to true in config.js
     if (config_general.expSettings.underlineOneLine === true) {
@@ -103,7 +106,7 @@ var initTrialView = function(CT) {
         }
 
         trialData.time_spent = Date.now() - startingTime;
-        trialData.trial_number = CT + 1;
+        trialData.trial_number = index + 1;
         trialData.response = $('input[name=question]:checked').val();
         trialData.reading_times = getDeltas();
         exp.data.out.push(trialData);
