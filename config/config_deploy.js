@@ -3,8 +3,8 @@ var config_deploy = {
     
     // obligatory fields
     "author": "Random Jane",  // needed to recover data from server app
-    "experiment_id": "MinimalTemplate", // needed to recover data from server app
-    "description": "A minimal template for a browser-based experiment which can be deployed in several ways",
+    "experiment_id": "spr-template", // needed to recover data from server app
+    "description": "A template for self-paced reading experiments",
     "deployMethod" : 'debug', // set deployment method; use one of 'debug', 'localServer', 'MTurk', 'MTurkSandbox', 'Prolific',
     
     // optional fields

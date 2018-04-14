@@ -60,21 +60,18 @@ var submitToMTurk = function() {
 
     console.log('submits to mturk');
     form.submit();
-};
 
-
-// parses the url to get thr assignment_id and worker_id
-var getHITData = function() {
-    var url = window.location.href;
-    var qArray = url.split('?');
-    qArray = qArray[1].split('&');
-    var HITData = {};
-
-    for (var i=0; i<qArray.length; i++) {
-        HITData[qArray[i].split('=')[0]] = qArray[i].split('=')[1];
-    }
-
-    console.log(HITData);
-
-    return HITData;
+    $.ajax({
+        type: 'POST',
+        url: config_deploy.MTurk_server,
+        crossDomain: true,
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (responseData, textStatus, jqXHR) {
+            console.log('submission to MTurk sucessful');
+        },
+        error: function (responseData, textStatus, errorThrown) {
+            console.log('submission to MTurk failed');
+        }
+    });
 };
