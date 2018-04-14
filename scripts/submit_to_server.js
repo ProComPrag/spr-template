@@ -60,8 +60,6 @@ var submitToMTurk = function(data) {
     $.ajax({
         type: 'POST',
         url: config_deploy.MTurk_server,
-        crossDomain: true,
-        contentType: 'application/json',
         data: JSON.stringify(data),
         success: function (responseData, textStatus, jqXHR) {
             console.log('submission to MTurk sucessful');
