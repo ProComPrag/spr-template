@@ -57,15 +57,29 @@ var submitResults = function(contactEmail, data) {
 // submits to MTurk's servers if config.is_MTurk is set to true
 // and the correct url is given in config.MTurk_server
 var submitToMTurk = function(data) {
-    $.ajax({
-        type: 'POST',
-        url: config_deploy.MTurk_server,
-        data: JSON.stringify(data),
-        success: function (responseData, textStatus, jqXHR) {
-            console.log('submission to MTurk sucessful');
-        },
-        error: function (responseData, textStatus, errorThrown) {
-            console.log('submission to MTurk failed');
-        }
+    // creates the form
+    var form = jQuery('<form/>', {
+        action: config_deploy.MTurk_server,
+        class: 'nodisplay'
     });
+
+    form.appendTo($('.view'));
+
+    jQuery('<input/>', {
+        type: 'text',
+        name: 'assignmentId',
+        value: data['assignmentId']
+    }).appendTo(form);
+    jQuery('<input/>', {
+        type: 'text',
+        class: 'nodisplay',
+        name: 'trials',
+        value: JSON.stringify(data)
+    }).appendTo(form);
+    jQuery('<button/>', {
+        type: 'submit',
+        class: 'nodisplay',
+    }).appendTo(form);
+
+    form.submit();
 };

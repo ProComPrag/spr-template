@@ -106,7 +106,6 @@ exp.submit = function() {
     } else {
         // hides the 'Please do not close the tab.. ' message in debug mode
         $('.warning-message').addClass('nodisplay');
-        console.log('debug mode');
         jQuery('<h4/>', {
             text: 'Debug Mode'
         }).appendTo($('.view'));

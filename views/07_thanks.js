@@ -4,7 +4,7 @@ var initThanksView = function() {
     view.name = 'thanks';
     view.template = $('#thanks-view').html();
 
-    if (config_deploy.is_MTurk) {
+    if ((config_deploy.is_MTurk) || (config_deploy.deployMethod === 'directLink')) {
         // updates the fields in the hidden form with info for the MTurk's server
         $('#main').html(Mustache.render(view.template, {
             thanksMessage: config_views.thanks.message,
@@ -15,10 +15,6 @@ var initThanksView = function() {
         $('main').html(Mustache.render(view.template, {
             thanksMessage: config_views.thanks.message,
             extraMessage: "Please press the button below<br />" + '<a href=' + prolificURL +  ' class="prolific-url">Finished!</a>'
-        }));
-    } else if (config_deploy.deployMethod === 'directLink'){
-        $('main').html(Mustache.render(view.template, {
-            thanksMessage: config_views.thanks.message
         }));
     } else if (config_deploy.deployMethod === 'debug') {
         $('main').html(Mustache.render(view.template, {}));
