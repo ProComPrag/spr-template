@@ -8,8 +8,14 @@ body {
 
 /* the container where the views are plugged */
 main {
+    min-height: 100%;
+}
+
+.view {
+    box-sizing: border-box;
     max-width: 960px;
-    margin: 50px auto;
+    margin: 0 auto;
+    padding: 50px 0;
 }
 
 /* titles */
@@ -109,6 +115,21 @@ button:focus {
     left: calc(50% - 15px);
 }
 
+.progress-bar {
+    border: 1px solid #5187BA;
+    border-radius: 3px;
+    display: inline-block;
+    height: 14px;
+    margin: 5px;
+    width: 60px;
+}
+
+.progress-bar #filled {
+    background-color: #5187BA;
+    display: block;
+    height: 14px;
+}
+
 .stimulus-container {
     display: -webkit-box;
     display: -moz-box;
@@ -169,23 +190,38 @@ button:focus {
     left: 0;
 }
 
-input[name=question] {
+.answer-container {
+    text-align: center;
+}
+
+.answer-container input[name=answer] {
     display: none;
 }
 
-.answer {
-    border: 2px solid #535AAC;
-    border-radius: 3px;
-    color: #535AAC;
-    font-weight: bold;
-    margin: 10px;
-    padding: 3px 6px;
+.answer-container .button-answer {
+    background-color: #5187BA;
+    border: none;
+    border-radius: 2px;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Lato", "Noto Sans", sans-serif;
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 700;
+    letter-spacing: 0.9px;
+    margin: 40px 5px 20px 5px;
+    outline: none;
+    padding: 5px 10px;
+    text-transform: uppercase;
 }
 
-.answer:hover,
-.answer:focus {
-    background: #535AAC;
-    color: white;
+.answer-container .button-answer:hover {
+    background-color: #324D93;
+}
+
+.answer-container .img-answer {
+    margin: 20px;
 }
 
 /* post test styles */
@@ -256,6 +292,38 @@ input[name=question] {
 
 .clearfix {
     clear: both;
+}
+
+.debug-results {
+    overflow-x: scroll;
+}
+
+#debugresults {
+    border-collapse: collapse;
+    font-family: "Lato", "Noto Sans", sans-serif;
+    font-size: 15px;
+    line-height: 20px;
+    width: 100%;
+}
+
+#debugresults td, #debugresults th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#debugresults tr:nth-child(even){ 
+    background-color: #f2f2f2;
+}
+
+#debugresults tr:hover {
+    background-color: #ddd;
+}
+
+#debugresults th {
+    background-color: #5187BA;
+    color: white;
+    padding: 15px 8px;
+    text-align: left;
 }
 
 /*

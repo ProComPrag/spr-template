@@ -10,30 +10,30 @@
         <!-- css -->
         <link rel="stylesheet" type="text/css" href="styles/styles.css">
 
+
         <!-- js dependencies -->
         <script src="libraries/mustache/mustache.min.js"></script>
         <script src="libraries/jquery/dist/jquery.min.js"></script>
+        <!-- This doesn't seem to be there on cloudflare -->
+        <script src="libraries/csv-js/csv.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.js"></script>
 
         <!-- local js files -->
-        <script src="scripts/exp.js"></script>
         <script src="scripts/main.js"></script>
+        <script src="scripts/experiment.js"></script>
         <script src="scripts/helpers.js"></script>
+        <script src="scripts/utils.js"></script>
         <script src="scripts/submit_to_server.js"></script>
 
+        <!-- local trial_info files -->
+        <script src="trial_info/main_trials.js"></script>
+        <script src="trial_info/practice_trials.js"></script>
+
         <!-- views -->
-        <script src="views/01_intro.js"></script>
-        <script src="views/02_instructions.js"></script>
-        <script src="views/03_practice.js"></script>
-        <script src="views/04_beginExp.js"></script>
-        <script src="views/05_trial.js"></script>
-        <script src="views/06_postTest.js"></script>
-        <script src="views/07_thanks.js"></script>
+        <script src="views/views.js"></script>
 
         <!-- config -->
-        <script src="config/config_general.js"></script>
-        <script src="config/config_views.js"></script>
         <script src="config/config_deploy.js"></script>
-
     </head>
 
     <body>
@@ -123,12 +123,12 @@
                 <span class="word">{{ . }}</span>
                 {{/ sentence }}
             </p>
-            <p class="question nodisplay">
-                <label for="yes" class="answer">yes</label>
-                <input type="radio" name="question" id="yes"
+            <p class="answer-container nodisplay">
+                <label for="yes" class="button-answer">yes</label>
+                <input type="radio" name="answer" id="yes"
                     value="yes" />
-                <input type="radio" name="question" id="no" value="no" />
-                <label for="no" class="answer">no</label>
+                <input type="radio" name="answer" id="no" value="no" />
+                <label for="no" class="button-answer">no</label>
             </p>
         </div>
         </script>
@@ -146,7 +146,7 @@
         </script>
 
         <!-- Trial view (actual experiment) -->
-        <script id="trial-view" type="x-tmpl-mustache">
+        <script id="main-view" type="x-tmpl-mustache">
         <div class="view">
             <div class="progress-bar-container">
                 <p>progress</p>
@@ -169,9 +169,9 @@
             </p>
             <p class="question nodisplay">
                 <label for="yes" class="answer">yes</label>
-                <input type="radio" name="question" id="yes"
+                <input type="radio" name="answer" id="yes"
                     value="yes" />
-                <input type="radio" name="question" id="no" value="no" />
+                <input type="radio" name="answer" id="no" value="no" />
                 <label for="no" class="answer">no</label>
             </p>
         </div>  
@@ -229,7 +229,7 @@
         </script>
 
         <!-- thanks view -->
-        <script id="thanks-view" type="x-tmpl-mustache">
+    <script id="thanks-view" type="x-tmpl-mustache">
         <div class="view thanks-templ">
             <h4 class="warning-message">Please do not close this tab until you see a <strong>&#10004; Submission Successful</strong> message on the screen.</h4>
             {{# thanksMessage }}
@@ -243,6 +243,7 @@
             <h4 class="extra-message nodisplay">{{{ extraMessage }}}</h4>
             {{/ extraMessage }}
         </div>
-        </script>
+    </script>
+
     </body>
 </html>

@@ -20,9 +20,9 @@ var initSentence = function() {
         // and the response buttons appear
         else {
             // hides last word
-            $(words[currentWord -1]).removeClass('visible');
+            $(words[currentWord - 1]).removeClass('visible');
             // shows the response buttons
-            $('.question').removeClass('nodisplay');
+            $('.answer-container').removeClass('nodisplay');
         }
     };
 

@@ -54,32 +54,9 @@ var submitResults = function(contactEmail, data) {
     });
 };
 
-// submits to MTurk's servers if config.is_MTurk is set to true
+// submits to MTurk's servers
 // and the correct url is given in config.MTurk_server
-var submitToMTurk = function(data) {
-    // creates the form
-    var form = jQuery('<form/>', {
-        action: config_deploy.MTurk_server,
-        class: 'nodisplay'
-    });
-
-    form.appendTo($('.view'));
-
-    jQuery('<input/>', {
-        type: 'text',
-        name: 'assignmentId',
-        value: data['assignmentId']
-    }).appendTo(form);
-    jQuery('<input/>', {
-        type: 'text',
-        class: 'nodisplay',
-        name: 'trials',
-        value: JSON.stringify(data)
-    }).appendTo(form);
-    jQuery('<button/>', {
-        type: 'submit',
-        class: 'nodisplay',
-    }).appendTo(form);
-
+var submitToMTurk = function() {
+    var form = $('#mturk-submission-form');
     form.submit();
 };

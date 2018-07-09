@@ -1,30 +1,20 @@
-// user enters information about deployment method here
 var config_deploy = {
     
     // obligatory fields
-    "author": "Stela",  // needed to recover data from server app
-    "experiment_id": "SPR-templ-test-01", // needed to recover data from server app
-    "description": "A template for self-paced reading experiments",
-    "deployMethod" : 'MTurkSandbox', // set deployment method; use one of 'debug', 'localServer', 'MTurk', 'MTurkSandbox', 'Prolific',
+    
+    // the experimentID is needed to recover data from the _babe server app
+    // you receive the experimentID when you create the experiment using the _babe server app
+    "experimentID": "8",
+    // if you use the _babe server app, specify its URL here
+    "serverAppURL" : "https://babe-backend.herokuapp.com/api/submit_experiment/",
+
+    // set deployment method; use one of:
+    //'debug', 'localServer', 'MTurk', 
+    // 'MTurkSandbox', 'Prolific', 'directLink'
+    "deployMethod" : "debug", 
     
     // optional fields
-    "contact_email": "someRandomJanesEmail@randomJoesAndJanes.love", // who to contact in case of trouble
+    
+    // who to contact in case of trouble
+    "contact_email": "YOUREMAIL@wherelifeisgreat.you", 
 };
-
-// user does not (should not) change the following information
-
-// checks the config _deploy.deployMethod is MTurk or MTurkSandbox,
-// sets the submission url to MTukr's servers
-config_deploy.MTurk_server = config_deploy.deployMethod == 'MTurkSandbox' ?
-    "https://workersandbox.mturk.com/mturk/externalSubmit" : // URL for MTurk sandbox
-    config_deploy.deployMethod == 'MTurk' ?
-    "https://www.mturk.com/mturk/externalSubmit" : // URL for live HITs on MTurk
-    ""; // blank if deployment is not via MTurk
-// if the config_deploy.deployMethod is not debug, then liveExperiment is true
-config_deploy.liveExperiment = config_deploy.deployMethod !== "debug";
-config_deploy.prolificCode = '9BTAOPQD';
-config_deploy.is_MTurk = config_deploy.MTurk_server !== "";
-console.log("deployMethod: " + config_deploy.deployMethod);
-console.log("live experiment: " + config_deploy.liveExperiment);
-console.log("runs on MTurk: " + config_deploy.is_MTurk);
-console.log("MTurk server: " + config_deploy.MTurk_server);
