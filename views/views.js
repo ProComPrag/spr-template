@@ -100,22 +100,22 @@ var practice = {
                 $('.sentence').removeClass('nodisplay');
 
                 // attaches an event listener for key pressed
-                // called handleKeyUp() when a key is pressed. (handleKeyUp() checks whether the key is space)
+                // called handleKeyDown() when a key is pressed. (handleKeyDown() checks whether the key is space)
                 $('.help-text').removeClass('hidden');
-                $('body').on('keyup', handleKeyUp);
+                $('body').on('keydown', handleKeyDown);
             }, exp.stimulusDuration + exp.pause + exp.crossDuration);
         // or the image does not disappear at all
         } else {
              setTimeout(function() {
                 $('.help-text').removeClass('hidden');
                 $('.sentence').removeClass('nodisplay');
-                $('body').on('keyup', handleKeyUp);
+                $('body').on('keydown', handleKeyDown);
             }, exp.pause + exp.crossDuration);
         }
 
         // checks whether the key pressed is space and if so calls sentence.showNextWord()
-        // handleKeyUp() is called when a key is pressed
-        var handleKeyUp = function(e) {
+        // handleKeyDown() is called when a key is pressed
+        var handleKeyDown = function(e) {
             if (e.which === 32) {
                 $('.help-text').addClass('hidden');
                 sentence.showNextWord();
@@ -155,7 +155,7 @@ var practice = {
             };
 
             exp.trial_data.push(trial_data);
-            $('body').off('keyup', handleKeyUp);
+            $('body').off('keydown', handleKeyDown);
             exp.findNextView();
         });
     },
@@ -231,22 +231,22 @@ var main = {
                 $('.sentence').removeClass('nodisplay');
 
                 // attaches an event listener for key pressed
-                // called handleKeyUp() when a key is pressed. (handleKeyUp() checks whether the key is space)
+                // called handleKeyDown() when a key is pressed. (handleKeyDown() checks whether the key is space)
                 $('.help-text').removeClass('hidden');
-                $('body').on('keyup', handleKeyUp);
+                $('body').on('keydown', handleKeyDown);
             }, exp.stimulusDuration + exp.pause + exp.crossDuration);
         // or the image does not disappear at all
         } else {
              setTimeout(function() {
                 $('.help-text').removeClass('hidden');
                 $('.sentence').removeClass('nodisplay');
-                $('body').on('keyup', handleKeyUp);
+                $('body').on('keydown', handleKeyDown);
             }, exp.pause + exp.crossDuration);
         }
 
         // checks whether the key pressed is space and if so calls sentence.showNextWord()
-        // handleKeyUp() is called when a key is pressed
-        var handleKeyUp = function(e) {
+        // handleKeyDown() is called when a key is pressed
+        var handleKeyDown = function(e) {
             if (e.which === 32) {
                 $('.help-text').addClass('hidden');
                 sentence.showNextWord();
@@ -286,7 +286,7 @@ var main = {
             };
 
             exp.trial_data.push(trial_data);
-            $('body').off('keyup', handleKeyUp);
+            $('body').off('keydown', handleKeyDown);
             exp.findNextView();
         });
     },
